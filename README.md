@@ -37,30 +37,25 @@ Click the "Compile Token.sol" button.
 
 Deploy the Contract In the left sidebar, click on the "Deploy & Run Transactions" tab.
 
-Select the environment. For simplicity, you can use the "JavaScript VM" for testing.
 
-Ensure the contract MyToken is selected in the dropdown.
 
-Click the "Deploy" button.
 
 Interact with the ContractAfter deployment, the contract instance will appear in the "Deployed Contracts" section.
 
-Expand the deployed contract to see available functions.
 
-Mint Tokens Only the owner (the address that deployed the contract) can mint tokens.
 
-In the mint function input, enter the recipient address and the amount to mint.
+Fill in the required constructor parameters:
 
-Click the "transact" button to mint tokens.
+name: The name of your token (e.g., "MyToken").
 
-Transfer Tokens Use the standard ERC-20 transfer function.
+symbol: The symbol of your token (e.g., "MTK").
 
-Enter the recipient address and the amount to transfer.
+initialSupply: The initial supply of tokens (e.g., 1000000 for 1 million tokens).
 
-Click the "transact" button to transfer tokens.
+Click on the "Transact" button to deploy the contract.
 
-Burn Tokens Any user can call the burn function.
+Interact with the Deployed Contract:
 
-Enter the amount of tokens to burn.
+Once deployed, you will see your contract listed under "Deployed Contracts".
 
-Click the "transact" button to burn tokens from the caller's balance.
+You can now interact with your contract by expanding its section and using the available functions (e.g., totalSupply, balanceOf, etc.).
