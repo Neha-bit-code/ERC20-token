@@ -9,24 +9,27 @@ To run this program, you can use Remix, an online Solidity IDE. To get started, 
 Once you are on the Remix website, create a new file by clicking on the "+" icon in the left-hand sidebar. Save the file with a .sol extension. (e.g., Tokensol).Copy and paste the following code into the file:
 ```
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.13;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract MyToken is ERC20, Ownable {
-    constructor() ERC20("MyToken", "MTK") Ownable(msg.sender) {}
-
-    // Only the owner can mint new tokens
-    function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
+contract MyERC20Token is ERC20 {
+    constructor(string memory name, string memory symbol, uint256 initialSupply) ERC20(name, symbol) {
+        _mint(msg.sender, initialSupply * (10 ** uint256(decimals())));
     }
 
-    // Any user can burn their own tokens
+    // Explicit burn function
     function burn(uint256 amount) public {
         _burn(msg.sender, amount);
     }
+
+    // Override transfer function
+    function transfer(address recipient, uint256 amount) public override returns (bool) {
+        _transfer(_msgSender(), recipient, amount);
+        return true;
+    }
 }
+
 ```
 
 Compile the Contract In the left sidebar, click on the "Solidity Compiler" tab.
@@ -36,14 +39,6 @@ Ensure the compiler version is set to 0.8.0 or later (matching the pragma statem
 Click the "Compile Token.sol" button.
 
 Deploy the Contract In the left sidebar, click on the "Deploy & Run Transactions" tab.
-
-
-
-
-Interact with the ContractAfter deployment, the contract instance will appear in the "Deployed Contracts" section.
-
-
-
 Fill in the required constructor parameters:
 
 name: The name of your token (e.g., "MyToken").
@@ -52,10 +47,22 @@ symbol: The symbol of your token (e.g., "MTK").
 
 initialSupply: The initial supply of tokens (e.g., 1000000 for 1 million tokens).
 
-Click on the "Transact" button to deploy the contract.
+Enter the constructor parameters: name (string), symbol (string), and initialSupply (uint256). For example:
+Name: "MyToken"
+
+Symbol: "MTK"
+
+Initial Supply: 1000000
+
+Click "Deploy".
 
 Interact with the Deployed Contract:
 
-Once deployed, you will see your contract listed under "Deployed Contracts".
+After deployment, your contract instance will appear in the "Deployed Contracts" section.
 
-You can now interact with your contract by expanding its section and using the available functions (e.g., totalSupply, balanceOf, etc.).
+
+Use the burn function to burn tokens.
+
+Use the transfer function to transfer tokens to another address.
+
+You can also call other inherited ERC20 functions such as balanceOf and totalSupply.
